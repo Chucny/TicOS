@@ -280,28 +280,53 @@ limitations under the License.
         return buttonElement;
     }
 
-    function showCalculator() {
-        openWindow(`
-          <div class="custom-calculator">
+function showCalculator() {
+    openWindow(`
+        <div class="custom-calculator">
             <input type="text" readonly />
             <div class="row">
-              <button>7</button><button>8</button><button>9</button><button>/</button>
+                <button>7</button><button>8</button><button>9</button><button>/</button>
             </div>
             <div class="row">
-              <button>4</button><button>5</button><button>6</button><button>*</button>
+                <button>4</button><button>5</button><button>6</button><button>*</button>
             </div>
             <div class="row">
-              <button>1</button><button>2</button><button>3</button><button>-</button>
+                <button>1</button><button>2</button><button>3</button><button>-</button>
             </div>
             <div class="row">
-              <button>0</button><button>.</button><button>=</button><button>+</button>
+                <button>0</button><button>.</button><button>=</button><button>+</button>
             </div>
-          </div>
-        `);
-    }
+        </div>
+    `);
 
-    var imageUrl = prompt("Please enter the URL of your desired background image:");
-    if (imageUrl) document.body.style.backgroundImage = 'url(imageUrl)';
+    // Attach event listener for button clicks
+    document.querySelector('.custom-calculator').addEventListener('click', function(event) {
+        if (event.target.tagName === 'BUTTON') {
+            const buttonValue = event.target.innerText;
+            handleCalculatorInput(buttonValue);
+        }
+    });
+}
+
+function handleCalculatorInput(value) {
+    const calculatorScreen = document.querySelector('.custom-calculator input');
+    if (value === '=') {
+        // Evaluate the expression
+        try {
+            calculatorScreen.value = eval(calculatorScreen.value);
+        } catch (error) {
+            calculatorScreen.value = 'Error';
+        }
+    } else {
+        calculatorScreen.value += value;
+    }
+}
+
+
+var imageUrl = prompt("Please enter the URL of your desired background image:");
+if (imageUrl) {
+    document.body.style.backgroundImage = `url(${imageUrl})`;
+}
 
     function calculator() {
         showCalculator();
