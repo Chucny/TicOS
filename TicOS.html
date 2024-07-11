@@ -300,10 +300,8 @@ limitations under the License.
         `);
     }
 
-    const imageUrl = prompt("Please enter the URL of your desired background image:");
-    if (imageUrl) {
-        document.body.style.backgroundImage = `url(${imageUrl})`;
-    }
+    var imageUrl = prompt("Please enter the URL of your desired background image:");
+    if (imageUrl) document.body.style.backgroundImage = 'url(imageUrl)';
 
     function calculator() {
         showCalculator();
@@ -326,8 +324,7 @@ limitations under the License.
     }
 
     function texteditor() {
-        openWindow('
-            <textarea style="width:1000px;height:600px;"></textarea>');
+        openWindow('<textarea style="width:1000px;height:600px;"></textarea>');
     }
 
     function files() {
@@ -433,9 +430,9 @@ limitations under the License.
     ">⛅</div>
     <div class="app-icon" onclick="location.reload();">🔄</div>
     <div class="app-icon" onclick="
-        var password = showCustomPrompt('Enter a password here.');
+        var password = prompt('Enter a password here.');
         while (true) {
-            if (showCustomPrompt('TicOS is locked. To unclock it, you need to oenter the password that you used o lock the computer.') == password) {
+            if (prompt('TicOS is locked. To unclock it, you need to oenter the password that you used o lock the computer.') == password) {
                 break;
             }
         }
