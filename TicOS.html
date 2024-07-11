@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
-<!-- Copyright 2024 centle99@gmail.com
+<!-- 
+Copyright 2024 centle99@gmail.com
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -10,282 +11,438 @@ You may obtain a copy of the License at
 
 Unless required by applicable law or agreed to in writing, software
 distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
 limitations under the License.
---!>
-  <head>
+-->
+<head>
     <title>TicOS</title>
     <style>
-      .overlay {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0, 0, 0, 0.5);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      }
-
-      .dialog-box {
-        width: 400px;
-        height: 300px;
-        background-color: white;
-        border-radius: 5px;
-        padding: 20px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-        position: relative;
-        overflow: hidden;
-        transition: all 0.3s ease-in-out;
-      }
-
-      .dialog-box.fullscreen {
-        width: 100%;
-        height: 100%;
-        top: 0;
-        left: 0;
-        border-radius: 0;
-      }
-
-      .button-container {
-        position: absolute;
-        top: 10px;
-        right: 10px;
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-      }
-
-      .button-container button {
-        border: none;
-        color: white;
-        font-size: 1.2rem;
-        cursor: pointer;
-      }
-
-      .round-button {
-        width: 30px;
-        height: 30px;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      }
-
-      /* Styling for the container element */
-/* Styling for the app bar */
 .app-bar {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  height: 80px;
-  padding: 0 10px;
-  background-color: #f4f4f4; 
-  border-radius: 0; /* No border radius */
-  box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    height: 80px;
+    padding: 0 10px;
+    background-color: rgba(244, 244, 244, 0.5); /* 50% transparent glassy effect */
+    backdrop-filter: blur(10px); /* Optional: Adds blur to the background */
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
 }
 
-/* Styling for the app icon container */
-.app-icon-container {
-  display: flex;
-  align-items: center;
-}
+        body {
+            color: grey;
+        }
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
 
-/* Styling for the app icon */
-.app-icon {
-  width: 60px; /* Increased size of app icons */
-  height: 60px; /* Increased size of app icons */
-  margin-right: 10px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-   /* Icon text color */
-  font-size: 40px; /* Increased size of emoji icons */
-}
+        .dialog-box {
+            width: 400px;
+            height: 300px;
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease-in-out;
+        }
 
+        .dialog-box.fullscreen {
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            border-radius: 0;
+        }
+
+        .button-container {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+        }
+
+        .button-container button {
+            border: none;
+            color: white;
+            font-size: 1.2rem;
+            cursor: pointer;
+        }
+
+        .round-button {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .app-bar {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            height: 80px;
+            padding: 0 10px;
+            background-color: #f4f4f4; /* macOS app bar background color */
+            border-radius: 0; /* No border radius */
+            box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .app-icon-container {
+            display: flex;
+            align-items: center;
+        }
+
+        .app-icon {
+            width: 60px; /* Increased size of app icons */
+            height: 60px; /* Increased size of app icons */
+            margin-right: 10px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px; /* Increased size of emoji icons */
+        }
+
+        .custom-alert,
+        .custom-prompt,
+        .custom-calculator {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .custom-prompt input {
+            margin: 10px 0;
+            padding: 5px;
+            font-size: 1rem;
+        }
+
+        .custom-prompt button,
+        .custom-alert button,
+        .custom-calculator button {
+            margin-top: 10px;
+            padding: 5px 10px;
+            font-size: 1rem;
+            cursor: pointer;
+            background-color: blue;
+            color: white;
+            border-radius: 5px;
+        }
+
+        .custom-calculator {
+            width: 240px;
+        }
+
+        .custom-calculator input {
+            width: 100%;
+            height: 40px;
+            font-size: 1.2rem;
+            text-align: right;
+            margin-bottom: 10px;
+            padding: 5px;
+        }
+
+        .custom-calculator button {
+            width: 50px;
+            height: 50px;
+            font-size: 1.2rem;
+            margin: 5px;
+        }
+
+        .custom-calculator .row {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .browser-search {
+            margin-bottom: 10px;
+        }
+
+        .browser-search input {
+            width: 80%;
+            padding: 5px;
+            font-size: 1rem;
+        }
+
+        .browser-search button {
+            padding: 5px 10px;
+            font-size: 1rem;
+            cursor: pointer;
+            background-color: blue;
+            color: white;
+            border-radius: 5px;
+            margin-left: 5px;
+        }
     </style>
-  </head>
-  <body>
-    <script>
-      const imageUrl = prompt("Please enter the URL of your desired background image:");
-      if (imageUrl) {
-        document.body.style.backgroundImage = `url(${imageUrl})`;
-      }
-      function openWindow(htmlContent) {
-        // Create an overlay element
+</head>
+<body>
+<script>
+    function showCustomPrompt(message, callback) {
         const overlay = document.createElement("div");
         overlay.classList.add("overlay");
 
-        // Create a dialog box element
+        const promptBox = document.createElement("div");
+        promptBox.classList.add("custom-prompt");
+        promptBox.innerHTML = `<p>${message}</p><input type="text" /><button>OK</button>`;
+
+        promptBox.querySelector("button").addEventListener("click", function () {
+            const userInput = promptBox.querySelector("input").value;
+            overlay.remove();
+            callback(userInput);
+        });
+
+        overlay.appendChild(promptBox);
+        document.body.appendChild(overlay);
+    }
+
+    function showCustomAlert(message) {
+        const overlay = document.createElement("div");
+        overlay.classList.add("overlay");
+
+        const alertBox = document.createElement("div");
+        alertBox.classList.add("custom-alert");
+        alertBox.innerHTML = `<p>${message}</p><button>OK</button>`;
+
+        alertBox.querySelector("button").addEventListener("click", function () {
+            overlay.remove();
+        });
+
+        overlay.appendChild(alertBox);
+        document.body.appendChild(overlay);
+    }
+
+    function openWindow(htmlContent) {
+        const overlay = document.createElement("div");
+        overlay.classList.add("overlay");
+
         const dialogBox = document.createElement("div");
         dialogBox.classList.add("dialog-box");
 
-        // Add the HTML content to the dialog box
         const contentElement = document.createElement("div");
         contentElement.innerHTML = htmlContent;
         dialogBox.appendChild(contentElement);
 
-        // Add the buttons to the dialog box
         const buttonContainer = document.createElement("div");
         buttonContainer.classList.add("button-container");
 
         const addButton = createButton("+", "green");
         addButton.addEventListener("click", function () {
-          dialogBox.classList.add("fullscreen");
+            dialogBox.classList.add("fullscreen");
         });
         buttonContainer.appendChild(addButton);
 
         const minusButton = createButton("-", "yellow");
         minusButton.addEventListener("click", function () {
-          dialogBox.classList.remove("fullscreen");
+            dialogBox.classList.remove("fullscreen");
         });
         buttonContainer.appendChild(minusButton);
 
         const closeButton = createButton("x", "red");
         closeButton.addEventListener("click", function () {
-          overlay.remove();
+            overlay.remove();
         });
         buttonContainer.appendChild(closeButton);
 
         dialogBox.appendChild(buttonContainer);
-
-        // Add the dialog box to the overlay element and the overlay element to the document body
         overlay.appendChild(dialogBox);
         document.body.appendChild(overlay);
-      }
+    }
 
-      function createButton(label, color) {
+    function createButton(label, color) {
         const buttonElement = document.createElement("button");
         buttonElement.classList.add("round-button");
         buttonElement.style.backgroundColor = color;
         buttonElement.innerText = label;
         return buttonElement;
-      }
-      function calculator() {
-        const expression = prompt("Enter an arithmetic expression:");
-        const result = eval(expression);
-        alert(`Result: ${result}`);
-      }
-      function web() {
-        openWindow('<iframe style="width:1000px;height:700px;" src="https://www.google.com/search?igu=1&q="></iframe>');
-      }
-      function texteditor() {
-        openWindow('<textarea style="width:1000px;height:700px;"></textarea>');
-      }
-function files(){
-var file=prompt("Enter file name here.");
-openWindow('<iframe style="width:1000px;height:700px;" src="'+file+'"><iframe>');
-}
-function calculateFPS() {
-  let frameCount = 0;
-  let lastTime = performance.now();
-
-  function updateFPS() {
-    const currentTime = performance.now();
-    const deltaTime = currentTime - lastTime;
-    const fps = Math.round(1000 / deltaTime);
-
-    console.log(`FPS: ${fps}`);
-
-    frameCount++;
-    if (frameCount === 60) {
-      // Display FPS after 60 frames (approximately one second)
-      alert(`Current FPS: ${fps}`);
-      return; // Stop calculating FPS after one time
     }
 
-    lastTime = currentTime;
-    requestAnimationFrame(updateFPS);
-  }
+    function showCalculator() {
+        openWindow(`
+          <div class="custom-calculator">
+            <input type="text" readonly />
+            <div class="row">
+              <button>7</button><button>8</button><button>9</button><button>/</button>
+            </div>
+            <div class="row">
+              <button>4</button><button>5</button><button>6</button><button>*</button>
+            </div>
+            <div class="row">
+              <button>1</button><button>2</button><button>3</button><button>-</button>
+            </div>
+            <div class="row">
+              <button>0</button><button>.</button><button>=</button><button>+</button>
+            </div>
+          </div>
+        `);
+    }
 
-  requestAnimationFrame(updateFPS);
-}
+    const imageUrl = showCustomPrompt("Please enter the URL of your desired background image:");
+    if (imageUrl) {
+        document.body.style.backgroundImage = `url(${imageUrl})`;
+    }
 
+    function calculator() {
+        showCalculator();
+    }
 
-      // Getting the user's current location
-      navigator.geolocation.getCurrentPosition(function (position) {
-        // Getting the current time
+    function web() {
+        openWindow(`
+            <div class="browser-search">
+                <input type="text" id="searchQuery" placeholder="Search...">
+                <button onclick="performSearch()">Search</button>
+            </div>
+            <iframe id="browserFrame" style="width:1000px;height:600px;" src="https://www.google.com/search?igu=1&q="></iframe>
+        `);
+    }
+
+    function performSearch() {
+        const query = document.getElementById('searchQuery').value;
+        const browserFrame = document.getElementById('browserFrame');
+        browserFrame.src = `https://www.google.com/search?igu=1&q=${query}`;
+    }
+
+    function texteditor() {
+        openWindow('
+            <textarea style="width:1000px;height:600px;"></textarea>');
+    }
+
+    function files() {
+        const file = showCustomPrompt("Enter file name here.");
+        openWindow(`<iframe style="width:1000px;height:600px;" src="${file}"></iframe>`);
+    }
+
+    function calculateFPS() {
+        let frameCount = 0;
+        let lastTime = performance.now();
+
+        function updateFPS() {
+            const currentTime = performance.now();
+            const deltaTime = currentTime - lastTime;
+            const fps = Math.round(1000 / deltaTime);
+
+            console.log(`FPS: ${fps}`);
+
+            frameCount++;
+            if (frameCount === 60) {
+                showCustomAlert(`Current FPS: ${fps}`);
+                return;
+            }
+
+            lastTime = currentTime;
+            requestAnimationFrame(updateFPS);
+        }
+
+        requestAnimationFrame(updateFPS);
+    }
+
+    navigator.geolocation.getCurrentPosition(function (position) {
         const time = new Date().toLocaleTimeString();
-        // Getting the current date
         const date = new Date().toLocaleDateString();
-        // Getting the latitude and longitude of the user's current location
         const latitude = position.coords.latitude;
         const longitude = position.coords.longitude;
-        // Building message to display in alert box
         const message = `Time: ${time}\nDate: ${date}\nLatitude: ${latitude.toFixed(4)}, Longitude: ${longitude.toFixed(4)}`;
-        
-      });
-    </script>
+    });
 
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+</script>
 
-    <div class="app-bar">
-      <div class="app-icon" onclick="web();">🌎</div>
-      <div class="app-icon" onclick="texteditor();">📝</div>
-      <div class="app-icon" onclick="navigator.geolocation.getCurrentPosition(function (position) {
-        const time = new Date().toLocaleTimeString();
-        const date = new Date().toLocaleDateString();
-        const latitude = position.coords.latitude;
-        const longitude = position.coords.longitude;
-        const message = `Time: ${time}\nDate: ${date}\nLatitude: ${latitude.toFixed(4)}, Longitude: ${longitude.toFixed(4)}`;
-        alert(message);
-      });">⏰</div>
-      <div class="app-icon" onclick="calculator();">⌨️</div>
-      <div class="app-icon" onclick="alert('Help \n Click \'+\' to maximize, \'-\' to minimize and \'X\' to close. If the web browser doesn\'t work correctly, you\'re using TicOS on a too old computer. You must enter an URL of an image for the background image (with HTTP protocol) or the name of an image file on your computer. Calculator: remember writing "*" instead of "X" for multiplying.');">
-      💻
-    </div><div class="app-icon" onclick='
-const getOSAndUserAgent = () => {
-  let os = "Unknown OS";
-  let userAgent = navigator.userAgent;
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
 
-  if (userAgent.indexOf("Win") != -1) os = "Windows OS";
-  if (userAgent.indexOf("Mac") != -1) os = "Macintosh OS";
-  if (userAgent.indexOf("Linux") != -1) os = "Linux OS";
-  if (userAgent.indexOf("Android") != -1) os = "Android OS";
-  if (userAgent.indexOf("like Mac") != -1) os = "iOS OS";
+<div class="app-bar">
+    <div class="app-icon" onclick="web();">🌎</div>
+    <div class="app-icon" onclick="texteditor();">📝</div>
+    
+    <div class="app-icon" onclick="calculator();">🧮</div>
+    <div class="app-icon" onclick="
+        const getOSAndUserAgent = () => {
+            let os = 'Unknown OS';
+            let userAgent = navigator.userAgent;
 
-  alert("Operating System: " + os);
-  alert("User Agent: " + userAgent);
-}
+            if (userAgent.indexOf('Win') != -1) os = 'Windows OS';
+            if (userAgent.indexOf('Mac') != -1) os = 'Macintosh OS';
+            if (userAgent.indexOf('Linux') != -1) os = 'Linux OS';
+            if (userAgent.indexOf('Android') != -1) os = 'Android OS';
+            if (userAgent.indexOf('like Mac') != -1) os = 'iOS OS';
 
-getOSAndUserAgent();
+            showCustomAlert('Operating System: ' + os + '<br>User Agent: ' + userAgent);
+        }
 
-'>ℹ️</div><div class="app-icon" onclick="fetch('https://api.ipify.org/?format=json')
-  .then(response => response.json())
-  .then(data => alert(data.ip));"><big style="size:8px;">IP</big></div><div class="app-icon" onclick="alert('Weather');
-var city = prompt('Enter the name of the city here');
-fetch('https://api.codetabs.com/v1/weather?city='+city).then((response) => response.text()).then((text) => alert('Weather in '+city+'\n'+text+'\n Source: codetabs.com'));">⛅</div>
-<div class="app-icon" onclick="location.reload();">🔄</div><div class="app-icon" onclick="var password=prompt('Enter a password here.');while (true){if(prompt('Enter password here.') == password){break;}}">🔐</div>
-    <div class="app-icon" onclick="files();">🗂️</div><div class="app-icon" onclick="calculateFPS();">🖥️</div></div>
+        getOSAndUserAgent();
+    ">ℹ️</div>
+    <div class="app-icon" onclick="fetch('https://api.ipify.org/?format=json')
+        .then(response => response.json())
+        .then(data => showCustomAlert('Your IP Adress: '+data.ip));
+    "><big style="size:8px;">IP</big></div>
+    <div class="app-icon" onclick="
+        var city = prompt('Enter the name of the city here');
+        fetch('https://api.codetabs.com/v1/weather?city=' + city)
+            .then(response => response.text())
+            .then(text => showCustomAlert('Weather in ' + city + '\n' + text + '\n Source: codetabs.com'));
+    ">⛅</div>
+    <div class="app-icon" onclick="location.reload();">🔄</div>
+    <div class="app-icon" onclick="
+        var password = showCustomPrompt('Enter a password here.');
+        while (true) {
+            if (showCustomPrompt('TicOS is locked. To unclock it, you need to oenter the password that you used o lock the computer.') == password) {
+                break;
+            }
+        }
+    ">🔐</div>
+    <div class="app-icon" onclick="files();">🗂️</div>
+    <div class="app-icon" onclick="calculateFPS();">🖥️</div>
+</div>
 
-  </body>
+</body>
 </html>
