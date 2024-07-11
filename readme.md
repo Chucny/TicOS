@@ -38,14 +38,10 @@
 </p>
 <p>
   <span style="color:rgb(153, 153, 153);">
-    <strong>Calculator</strong>
+    <strong>A Calculator</strong>
   </span>
-  <span style="color:rgb(153, 153, 153);">
-    (you have to write something for it to calculate, remember to write “</span>
-  <span style="color:rgb(153, 153, 153);">
-    <em>” instead for “X</em>
-  </span>
-  <span style="color:rgb(153, 153, 153);">” if you’re multiplying something)</span>
+
+
 </p>
 <p>
   <span style="color:rgb(153, 153, 153);">
@@ -78,11 +74,7 @@
     <strong>A button where you can see you IP</strong>
   </span>
 </p>
-<p>
-  <span style="color:rgb(153, 153, 153);">
-    <strong>A help button&nbsp;</strong>
-  </span>
-</p>
+
 <p>
   <span style="color:rgb(153, 153, 153);">
     <strong>Background Image</strong>
