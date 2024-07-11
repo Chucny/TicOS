@@ -300,7 +300,7 @@ limitations under the License.
         `);
     }
 
-    const imageUrl = showCustomPrompt("Please enter the URL of your desired background image:");
+    const imageUrl = prompt("Please enter the URL of your desired background image:");
     if (imageUrl) {
         document.body.style.backgroundImage = `url(${imageUrl})`;
     }
