@@ -18,25 +18,25 @@ limitations under the License.
 <head>
     <title>TicOS</title>
     <style>
-.app-bar {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    align-items: center;
-    height: 80px;
-    padding: 0 10px;
-    background-color: rgba(244, 244, 244, 0.5); /* 50% transparent glassy effect */
-    backdrop-filter: blur(10px); /* Optional: Adds blur to the background */
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    border-top-left-radius: 20px;
-    border-top-right-radius: 20px;
+/* Settings App Styling *
+/* Apple-like Font Styling */
+body, .settings-app, .settings-app h2, .settings-app h3, .settings-section p {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-size: 16px;
+color:grey;
 }
 
-        body {
-            color: grey;
-        }
+.settings-app h2 {
+    font-size: 24px;
+}
+
+.settings-app h3 {
+    font-size: 20px;
+}
+
+.settings-section p {
+    font-size: 14px;
+}
         .overlay {
             position: fixed;
             top: 0;
@@ -50,8 +50,8 @@ limitations under the License.
         }
 
         .dialog-box {
-            width: 400px;
-            height: 300px;
+            width: 440px;
+            height: 332px;
             background-color: white;
             border-radius: 10px;
             padding: 20px;
@@ -94,33 +94,43 @@ limitations under the License.
             justify-content: center;
         }
 
-        .app-bar {
-            display: flex;
-            flex-direction: row;
-            justify-content: space-between;
-            align-items: center;
-            height: 80px;
-            padding: 0 10px;
-            background-color: #f4f4f4; /* macOS app bar background color */
-            border-radius: 0; /* No border radius */
-            box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);
-        }
+/* Taskbar Styling */
+.app-bar {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    height: 80px;
+    padding: 0 10px;
+    background-color: rgba(244, 244, 244, 0.5); /* 50% transparent */
+    backdrop-filter: blur(10px); /* Adds a blur effect to the background */
+    position: fixed;
+    bottom: 0;
+    width: 80%; /* Width similar to iPad dock */
+    left: 10%; /* Centered horizontally */
+    border-radius: 20px; /* Rounded corners */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow for a floating effect */
+}
 
-        .app-icon-container {
-            display: flex;
-            align-items: center;
-        }
+/* App Icon Styling */
+.app-icon {
+    width: 60px;
+    height: 60px;
+    margin-right: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 40px; /* Icon size */
+    background-color: rgba(255, 255, 255, 0.7); /* Light background with some transparency */
+    border-radius: 15px; /* Rounded corners for icons */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Light shadow for icons */
+    transition: background-color 0.3s, box-shadow 0.3s; /* Smooth transition effects */
+}
 
-        .app-icon {
-            width: 60px; /* Increased size of app icons */
-            height: 60px; /* Increased size of app icons */
-            margin-right: 10px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 40px; /* Increased size of emoji icons */
-        }
+.app-icon:hover {
+    background-color: rgba(255, 255, 255, 1); /* Fully opaque on hover */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Slightly stronger shadow on hover */
+}
 
         .custom-alert,
         .custom-prompt,
@@ -322,12 +332,6 @@ function handleCalculatorInput(value) {
     }
 }
 
-
-var imageUrl = prompt("Please enter the URL of your desired background image:");
-if (imageUrl) {
-    document.body.style.backgroundImage = `url(${imageUrl})`;
-}
-
     function calculator() {
         showCalculator();
     }
@@ -338,7 +342,7 @@ if (imageUrl) {
                 <input type="text" id="searchQuery" placeholder="Search...">
                 <button onclick="performSearch()">Search</button>
             </div>
-            <iframe id="browserFrame" style="width:1000px;height:600px;" src="https://www.google.com/search?igu=1&q="></iframe>
+            <iframe id="browserFrame" style="width:1000px;height:700px;" src="https://www.google.com/search?igu=1&q="></iframe>
         `);
     }
 
@@ -409,6 +413,42 @@ function files() {
         const longitude = position.coords.longitude;
         const message = `Time: ${time}\nDate: ${date}\nLatitude: ${latitude.toFixed(4)}, Longitude: ${longitude.toFixed(4)}`;
     });
+function openSettingsApp() {
+    openWindow(`
+        <div class="settings-app">
+            <h2>Settings</h2>
+            <div class="settings-section">
+                <h3>Change Wallpaper</h3>
+                <input type="text" id="wallpaperUrl" placeholder="Enter image URL" />
+                <button onclick="changeWallpaper()">Set Wallpaper</button>
+            </div>
+            <div class="settings-section">
+                <h3>Show IP Address</h3>
+                <button onclick="showIPAddress()">Show IP</button>
+                <p id="ipAddress"></p>
+            </div>
+            <div class="settings-section">
+                <h3>System</h3>
+                <button onclick="location.reload();">Restart TicOS</button>
+            </div>
+        </div>
+    `);
+}
+
+function changeWallpaper() {
+    const url = document.getElementById('wallpaperUrl').value;
+    if (url) {
+        document.body.style.backgroundImage = `url(${url})`;
+    }
+}
+
+function showIPAddress() {
+    fetch('https://api.ipify.org/?format=json')
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById('ipAddress').innerText = `Your IP Address: ${data.ip}`;
+        });
+}
 
 </script>
 
@@ -449,42 +489,13 @@ function files() {
     
     <div class="app-icon" onclick="calculator();">🧮</div>
     <div class="app-icon" onclick="
-        const getOSAndUserAgent = () => {
-            let os = 'Unknown OS';
-            let userAgent = navigator.userAgent;
-
-            if (userAgent.indexOf('Win') != -1) os = 'Windows OS';
-            if (userAgent.indexOf('Mac') != -1) os = 'Macintosh OS';
-            if (userAgent.indexOf('Linux') != -1) os = 'Linux OS';
-            if (userAgent.indexOf('Android') != -1) os = 'Android OS';
-            if (userAgent.indexOf('like Mac') != -1) os = 'iOS OS';
-
-            showCustomAlert('Operating System: ' + os + '<br>User Agent: ' + userAgent);
-        }
-
-        getOSAndUserAgent();
-    ">ℹ️</div>
-    <div class="app-icon" onclick="fetch('https://api.ipify.org/?format=json')
-        .then(response => response.json())
-        .then(data => showCustomAlert('Your IP Adress: '+data.ip));
-    "><big style="size:8px;">IP</big></div>
-    <div class="app-icon" onclick="
         var city = prompt('Enter the name of the city here');
         fetch('https://api.codetabs.com/v1/weather?city=' + city)
             .then(response => response.text())
             .then(text => showCustomAlert('Weather in ' + city + '\n' + text + '\n Source: codetabs.com'));
     ">⛅</div>
-    <div class="app-icon" onclick="location.reload();">🔄</div>
-    <div class="app-icon" onclick="
-        var password = prompt('Enter a password here.');
-        while (true) {
-            if (prompt('TicOS is locked. To unclock it, you need to oenter the password that you used o lock the computer.') == password) {
-                break;
-            }
-        }
-    ">🔐</div>
     <div class="app-icon" onclick="files();">🗂️</div>
-    <div class="app-icon" onclick="calculateFPS();">🖥️</div>
+   <div class="app-icon" onclick="openSettingsApp();">⚙️</div>
 </div>
 
 </body>
