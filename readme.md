@@ -27,7 +27,7 @@
     <strong>A browser</strong>
   </span>
   <span style="color:rgb(153, 153, 153);">
-    (just for fun, a frame displaying the google.com homepage)</span>
+    Deafult homepage: Centle Search <br>Deafult search enngine in search bar: Google Search</span>
 </p>
 <p>
   <span style="color:rgb(153, 153, 153);">
