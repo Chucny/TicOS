@@ -50,20 +50,7 @@
   <span style="color:rgb(153, 153, 153);">
     (you can check the weather)</span>
 </p>
-<p>
-  <span style="color:rgb(153, 153, 153);">
-    <strong>Password lock</strong>
-  </span>
-  <span style="color:rgb(153, 153, 153);">
-    (lock the system with a password)</span>
-</p>
-<p>
-  <span style="color:rgb(153, 153, 153);">
-    <strong>FPS Test</strong>
-  </span>
-  <span style="color:rgb(153, 153, 153);">
-    (see how much fps you have)</span>
-</p>
+
 <p>
   <span style="color:rgb(153, 153, 153);">
     <strong>A restart function at the app bar</strong>
@@ -71,17 +58,8 @@
 </p>
 <p>
   <span style="color:rgb(153, 153, 153);">
-    <strong>A button where you can see you IP</strong>
+    <strong>Background Image</strong><br>(Change your background image inn settings.)
   </span>
-</p>
-
-<p>
-  <span style="color:rgb(153, 153, 153);">
-    <strong>Background Image</strong>
-  </span>
-</p>
-<p>
-  <span style="color:rgb(153, 153, 153);">When you start the program, it will always open a window where you have to type the link of a background image. You can use an image file or url.</span>
 </p>
 <p>
   <span style="color:rgb(153, 153, 153);">Here are some examples how you can apply your background image:</span>
@@ -90,11 +68,12 @@
   <span style="color:rgb(153, 153, 153);">From computer: image.jpg&nbsp;</span>
 </p>
 <p>
-  <span style="color:rgb(153, 153, 153);">From the web: https://www.example.com/image</span>
+  <span style="color:rgb(153, 153, 153);">From the web: https://www.example.com/image.jpg</span>
 </p>
 <p>
   <span style="color:rgb(153, 153, 153);">Note: Remember to enter the HTTP protocol to the link, if you don’t do that, it wont work!</span>
 </p>
+<br><p>Conclusion: This is a better version of OS.js</p>
 <p>
   <span style="color:rgb(153, 153, 153);">
     <strong>IMPORTANT:</strong>
